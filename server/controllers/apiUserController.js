@@ -48,7 +48,8 @@ module.exports = {
         
                 res.status(201).json({
                  data: {
-                   email: user.email
+                   email: user.email,
+                   fullname: user.fullname
                  },
                   
                   token: token,
