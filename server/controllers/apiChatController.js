@@ -24,5 +24,17 @@ module.exports = {
                 err,
               });
         }
+    },
+    deleteChat: async(req, res) => {
+      try {
+        const chat = await Chat.findOneAndRemove({id: req.params.id})
+        res.status(201).json({success: true, data: chat})
+        }catch(err){
+            res.status(500).json({
+                success: false,
+                message: "something wrong",
+                err,
+              });
+        }
     }
 }

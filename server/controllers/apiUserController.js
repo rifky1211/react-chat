@@ -96,9 +96,10 @@ module.exports = {
                 });
         
                 res.status(201).json({
+                  success: true,
                   data: {
-        
-                    email: user.email
+                    email: user.email,
+                    fullname: user.fullname
                   },
                   token: token
                 });

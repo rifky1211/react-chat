@@ -14,6 +14,9 @@ export default function Button(props) {
     if(props.isLarge){
         className.push("btn-lg")
     }
+    if(props.isSecondary){
+        className.push("btn-secondary")
+    }
     return (
         <button className={className.join(" ")}>
             {props.children}
@@ -25,5 +28,6 @@ Button.propTypes = {
     isPrimary: propTypes.bool,
     isSmall: propTypes.bool,
     isLarge: propTypes.bool,
+    isSecondary: propTypes.bool
     
 }

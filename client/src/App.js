@@ -7,13 +7,15 @@ import "./assets/fontawesome/css/all.min.css";
 
 import Chat from "./views/Chat";
 import RegisterPage from './views/RegisterPage'
+import LoginPage from './views/LoginPage'
 
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Route exact path="/" component={RegisterPage}></Route>
+        <Route exact path="/" component={LoginPage}></Route>
+        <Route path="/register" component={RegisterPage}></Route>
         <Route path="/chat" component={Chat}></Route>
       </div>
     </Router>

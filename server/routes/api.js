@@ -10,6 +10,7 @@ router.post('/user/login', apiUserController.login)
 
 router.get('/chat', apiChatController.read)
 router.post('/chat/add', apiChatController.addChat)
+router.delete('/chat/:id', apiChatController.deleteChat)
 
 
 module.exports = router;

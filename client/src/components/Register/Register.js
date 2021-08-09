@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
+
+
 import Button from '../Button/Button'
 import axios from 'axios'
 
@@ -28,7 +31,7 @@ export default class Register extends Component {
       password: this.state.password,
       fullname: this.state.fullname
     }).then((user) => {
-      window.location = "/"
+      window.location = "/chat"
       localStorage.setItem("name", user.data.data.fullname)
       localStorage.setItem("token", user.data.token)
     })
@@ -75,6 +78,8 @@ export default class Register extends Component {
             </div>
             <br />
             <Button isPrimary isLarge>Register</Button>
+            <p className="text-center mt-2">Already have account ? <Link to="/">click here to login</Link></p>
+
           </div>
         </form>
       </div>
