@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const secretKey = "reactchat";
+const secretKey = "react-chat";
 var jwt = require("jsonwebtoken");
 module.exports = {
     get: async(req, res) => {

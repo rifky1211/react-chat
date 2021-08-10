@@ -11,6 +11,8 @@ export default class BoxMessage extends Component {
           message={item.message}
           key={item.id}
           remove={this.props.removeChat}
+          re={this.props.resend}
+          sent={item.sent}
         ></ListMessage>
       );
     });

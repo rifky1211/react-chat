@@ -17,6 +17,7 @@ export default class Chat extends Component {
     this.addMessage = this.addMessage.bind(this);
     this.removeChat = this.removeChat.bind(this);
     this.loadChat = this.loadChat.bind(this);
+    this.resend = this.resend.bind(this);
   }
 
   componentDidMount() {
@@ -39,24 +40,61 @@ export default class Chat extends Component {
         },
       })
       .then((response) => {
-        this.setState({ message: response.data });
+        this.setState({
+          message: response.data.map((item) => {
+            item.sent = true;
+            return item;
+          }),
+        });
       });
   }
 
   addMessage(message, fullname) {
     const id = Date.now();
-    this.setState({
-      message: [...this.state.message, { id, message, fullname }],
-    });
+    this.setState((state, props) => ({
+      message: [...state.message, { id, message, fullname, sent: true }],
+    }));
     axios
       .post("http://localhost:3000/api/chat/add", {
-        id,
-        message,
-        fullname,
-      })
+        id, message, fullname,
+      },
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+      )
       .then((data) => {
         socket.emit("new message", null);
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState((state, props) => ({
+          message: state.message.map((item) => {
+            if (item.id === id) {
+              item.sent = false;
+            }
+            return item;
+          }),
+        }));
       });
+  }
+
+  resend(message, fullname) {
+    const id = Date.now();
+    axios
+      .post("http://localhost:3000/api/chat/add", {
+        id, message, fullname,
+      },
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+      ).then((data) => {
+      socket.emit("new message", null);
+      this.loadChat();
+    });
   }
 
   removeChat(id) {
@@ -85,6 +123,7 @@ export default class Chat extends Component {
         <BoxMessage
           data={this.state.message}
           removeChat={this.removeChat}
+          resend={this.resend}
         ></BoxMessage>
         <FormName addMessage={this.addMessage}></FormName>
       </div>
