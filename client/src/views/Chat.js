@@ -6,7 +6,7 @@ import Header from "../components/Header/Header";
 import BoxMessage from "../components/Chat/BoxMessage";
 import FormName from "../components/Chat/FormName";
 
-var SERVER = "http://localhost:3000";
+var SERVER = `${process.env.REACT_APP_SERVER_URL}`;
 var socket = socketClient(SERVER);
 
 export default class Chat extends Component {
@@ -34,7 +34,7 @@ export default class Chat extends Component {
 
   loadChat() {
     axios
-      .get(`http://localhost:3000/api/chat`, {
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/chat`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -55,7 +55,7 @@ export default class Chat extends Component {
       message: [...state.message, { id, message, fullname, sent: true }],
     }));
     axios
-      .post("http://localhost:3000/api/chat/add", {
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/chat/add`, {
         id, message, fullname,
       },
       {
@@ -83,7 +83,7 @@ export default class Chat extends Component {
   resend(message, fullname) {
     const id = Date.now();
     axios
-      .post("http://localhost:3000/api/chat/add", {
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/chat/add`, {
         id, message, fullname,
       },
       {
@@ -99,7 +99,7 @@ export default class Chat extends Component {
 
   removeChat(id) {
     axios
-      .delete(`http://localhost:3000/api/chat/${id}`, {
+      .delete(`${process.env.REACT_APP_SERVER_URL}/api/chat/${id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
